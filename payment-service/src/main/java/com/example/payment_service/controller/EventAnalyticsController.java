@@ -1,9 +1,10 @@
-package com.epsi.demo_cours_microservices.controller;
+package com.example.payment_service.controller;
 
+import com.example.payment_service.model.EventAnalytics;
+import com.example.payment_service.service.EventAnalyticsService;
 import org.springframework.web.bind.annotation.*;
 
-import com.epsi.demo_cours_microservices.model.EventAnalytics;
-import com.epsi.demo_cours_microservices.service.EventAnalyticsService;
+
 
 import java.util.List;
 

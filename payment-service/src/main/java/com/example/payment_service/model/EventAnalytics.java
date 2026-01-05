@@ -1,4 +1,4 @@
-package com.epsi.demo_cours_microservices.model;
+package com.example.payment_service.model;
 
 import jakarta.persistence.*;
 

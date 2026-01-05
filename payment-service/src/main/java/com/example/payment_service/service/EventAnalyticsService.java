@@ -1,11 +1,11 @@
-package com.epsi.demo_cours_microservices.service;
+package com.example.payment_service.service;
 
 import java.util.List;
 
+import com.example.payment_service.model.EventAnalytics;
+import com.example.payment_service.repository.EventAnalyticsRepository;
 import org.springframework.stereotype.Service;
 
-import com.epsi.demo_cours_microservices.model.EventAnalytics;
-import com.epsi.demo_cours_microservices.repository.EventAnalyticsRepository;
 
 @Service
 public class EventAnalyticsService {
