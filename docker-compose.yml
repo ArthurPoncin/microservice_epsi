@@ -1,0 +1,26 @@
+services:
+  payment-service:
+    container_name: backend-container
+    build:
+      context: ./payment-service 
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  frontend:
+    container_name: frontend-container
+    build:
+      context: ./ClientMicroServiceJava
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - payment-service
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
