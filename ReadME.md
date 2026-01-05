@@ -81,3 +81,17 @@ endpoints :
 - /analytics/{eventid}/update : Met à jour les statistique d'un événement
 - /analytics/events/{eventId}/stats : Recupère les statistiques d'un évenement grâce a son id
 - /analytics/dashboard : Recupère les statistiques de tous les événements
+
+## Microservices Notifications
+
+endpoints :
+
+- POST /notifications/sendNotification Permet d’envoyer une notification à un ou plusieurs destinataires.  
+**Body JSON attendu** :  
+```json
+  {
+    "message": "Test de notification",
+    "recipients": ["user1@example.com", "user2@example.com"]
+  }
+```
+- GET /notifications/{id} Récupère une notification spécifique par son identifiant.
