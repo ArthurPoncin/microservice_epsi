@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Component;
 
-import com.example.payment_service.processor.PaymentProcessor;
-
 @Component
 public class PaypalProcessor implements PaymentProcessor {
 
