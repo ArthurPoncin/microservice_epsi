@@ -67,6 +67,12 @@ public class PaymentService {
         return repository.findByRegistrationId(registrationId);
     }
 
+    public void deleteBilling(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Facture introuvable pour suppression");
+        }
+        repository.deleteById(id);
+
     public List<Payment> getAllPayments() {
         return repository.findAll();
     }
