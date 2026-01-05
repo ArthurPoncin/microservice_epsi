@@ -19,6 +19,16 @@ public class EventAnalyticsController {
         this.service = service;
     }
 
+    @GetMapping("/{eventId}")
+    public EventAnalytics createEventStats(@PathVariable Long eventId) {
+        return service.createAnalytics(eventId);
+    }
+    
+    @GetMapping("/{eventId}/update")
+    public EventAnalytics updateEventStats(@PathVariable Long eventId, int newParticipant, double ticketPrice, int capacity) {
+        return service.updateAnalytics(eventId, newParticipant, ticketPrice, capacity);
+    }
+    
     @GetMapping("/events/{eventId}/stats")
     public EventAnalytics getEventStats(@PathVariable Long eventId) {
         return service.getEventAnalytics(eventId);
