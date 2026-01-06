@@ -53,7 +53,6 @@ function Events() {
       {events.length === 0 ? (
         <p>Aucun événement disponible pour le moment.</p>
       ) : (
-        /* On remet la grille de cartes ici */
         <div className="events-grid">
           {events.map((event) => (
             <div
@@ -62,7 +61,6 @@ function Events() {
               onClick={() => navigate(`/events/${event.id}`)}
             >
               <div className="card-header">
-                {/* Placeholder d'image avec les 2 premières lettres du titre */}
                 <div className="event-image-placeholder">
                   {event.titre
                     ? event.titre.substring(0, 2).toUpperCase()
@@ -77,7 +75,6 @@ function Events() {
 
                 <div className="card-footer">
                   <span className="price-tag">{event.prix} €</span>
-                  {/* Petit badge pour le statut (OUVERT/COMPLET) */}
                   <span
                     className={`status-badge ${
                       event.statut === "OUVERT" ? "green" : "red"

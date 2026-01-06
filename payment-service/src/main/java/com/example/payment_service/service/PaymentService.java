@@ -6,10 +6,14 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.payment_service.model.Payment;
+import com.example.payment_service.model.Registration;
 import com.example.payment_service.processor.PaymentProcessor;
 import com.example.payment_service.repository.PaymentRepository;
+import com.example.payment_service.repository.RegistrationRepository;
+
 
 @Service
 public class PaymentService {
@@ -24,12 +28,28 @@ public class PaymentService {
         this.processors = processorList.stream()
                 .collect(Collectors.toMap(PaymentProcessor::getProviderName, Function.identity()));
     }
-
+    @Autowired
+    private RegistrationRepository registrationRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
     public Payment createPayment(Payment payment) {
-        if (payment.getStatut() == null) {
-            payment.setStatut("PENDING");
-        }
-        return repository.save(payment);
+        // Obligé de valider (on simule un succès Stripe)
+        payment.setStatut("VALIDE");
+        
+        // On sauvegarde du paiement 
+        Payment savedPayment = paymentRepository.save(payment);
+        
+        // Recherche de l'inscription liée à ce paiement
+        Registration registration = registrationRepository.findById(payment.getRegistrationId())
+                .orElseThrow(() -> new RuntimeException("Inscription introuvable pour l'ID : " + payment.getRegistrationId()));
+
+        // Mise à jour du statut de l'inscription pour le Frontend
+        registration.setStatutPaiement("VALIDE");
+
+        // Sauvegarde
+        registrationRepository.save(registration);
+
+        return savedPayment;
     }
 
     public Payment processPayment(Long id) {

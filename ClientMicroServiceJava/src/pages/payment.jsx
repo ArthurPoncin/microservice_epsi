@@ -3,7 +3,7 @@ import "../css/payment.css";
 
 function Payment() {
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null); // 'success' ou 'error'
+  const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   // Simulation des données
@@ -18,7 +18,6 @@ function Payment() {
     setStatus(null);
     setErrorMessage("");
 
-    // 1. On prépare l'objet JSON
     const paymentPayload = {
       registrationId: orderDetails.registrationId,
       montant: orderDetails.amount,
@@ -28,8 +27,7 @@ function Payment() {
     };
 
     try {
-      // 2. Appel DIRECT au backend Spring Boot ici (au lieu de passer par un service)
-      const response = await fetch("http://localhost:8080/api/payments", {
+      const response = await fetch(`${API_BASE_URL}/payments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +35,6 @@ function Payment() {
         body: JSON.stringify(paymentPayload),
       });
 
-      // 3. Gestion manuelle des erreurs HTTP (car fetch ne le fait pas tout seul)
       if (!response.ok) {
         throw new Error("Erreur serveur : " + response.status);
       }

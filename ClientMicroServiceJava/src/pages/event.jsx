@@ -61,10 +61,10 @@ function Event() {
         // SUCCÈS : On stocke l'inscription et on passe à l'étape paiement
         setRegistrationData(data); // data contient { id: 123, statutPaiement: "EN_ATTENTE" }
         setStep(1); // On change l'affichage pour montrer le bouton de paiement
-        setFeedback("✅ Place réservée ! Veuillez procéder au paiement.");
+        setFeedback("Place réservée ! Veuillez procéder au paiement.");
       })
       .catch((err) => {
-        setFeedback("❌ Erreur : " + err.message);
+        setFeedback(" Erreur : " + err.message);
       });
   };
 
@@ -85,7 +85,7 @@ function Event() {
 
     console.log("Envoi au service paiement...", paymentPayload);
 
-    fetch(`http://localhost:8081/payments`, {
+    fetch(`http://localhost:8080/payments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(paymentPayload),
@@ -94,7 +94,7 @@ function Event() {
       .then((paymentResponse) => {
         console.log("Paiement réussi", paymentResponse);
         setStep(2); // On passe à l'écran de succès
-        setFeedback("✅ Paiement validé ! Votre inscription est confirmée.");
+        setFeedback("Paiement validé ! Votre inscription est confirmée.");
       })
       .catch((err) => {
         console.error("Erreur paiement", err);
@@ -183,7 +183,7 @@ function Event() {
                   style={{ backgroundColor: "#16a34a" }}
                   onClick={() => setPaymentModalOpen(true)} // <--- CLIC ICI
                 >
-                  💳 Payer maintenant
+                  Payer maintenant
                 </button>
               </div>
             )}

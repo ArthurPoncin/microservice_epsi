@@ -1,11 +1,17 @@
 services:
-  payment-service:
+  # ON GARDE UN SEUL BACKEND (qui fait tout)
+  global-backend:
     container_name: backend-container
     build:
-      context: ./payment-service 
+      context: ./payment-service # Le dossier qui contient tout le code fusionné
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      # On ouvre le port 8080 car c'est celui que ton Front React attaque par défaut
+      - "8080:8080"
+    environment:
+      # On force Spring à écouter sur le 8080 (au cas où)
+      - SERVER_PORT=8080
+      - STRIPE_API_KEY=sk_test_51SfL2fLbw9bnccGvTyIJSmbZhhLDWZN49Fuzpmf4chUCzcHjc5DHYceNJ6hgCbN9oifuOOoyAXbkkYLOkzF8ZVA200h1seD5ng
     networks:
       - app-network
 
@@ -17,7 +23,7 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - payment-service
+      - global-backend
     networks:
       - app-network
 

@@ -15,7 +15,6 @@ const MyRegistrations = () => {
   const [error, setError] = useState(null);
   const [searched, setSearched] = useState(false);
 
-  // 1. Charger la liste des événements (inchangé)
   useEffect(() => {
     fetch(`${API_BASE_URL}/events`)
       .then((res) => res.json())
@@ -29,7 +28,6 @@ const MyRegistrations = () => {
       .catch((err) => console.error("Erreur chargement events", err));
   }, []);
 
-  // 2. Fonction de recherche (utilisée par le formulaire)
   const searchRegistrations = (emailToSearch) => {
     if (!emailToSearch) return;
 
@@ -37,7 +35,6 @@ const MyRegistrations = () => {
     setError(null);
     setSearched(true);
 
-    // Sauvegarde l'email
     localStorage.setItem("userEmail", emailToSearch);
 
     fetch(`${API_BASE_URL}/events/my-registrations?email=${emailToSearch}`)
@@ -56,17 +53,13 @@ const MyRegistrations = () => {
       });
   };
 
-  // 3. useEffect pour le chargement automatique au démarrage
   useEffect(() => {
     // Si on a un email initialisé (depuis le localStorage), on lance la recherche
     if (email) {
-      // Note : On copie la logique ici ou on appelle la fonction externe.
-      // Pour éviter l'erreur de dépendance, on appelle la fonction searchRegistrations
-      // MAIS on ajoute le commentaire eslint-disable pour dire à React "T'inquiète, je gère".
       searchRegistrations(email);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Le tableau vide [] force l'exécution UNE SEULE FOIS au montage
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

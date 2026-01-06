@@ -1,14 +1,16 @@
 package com.example.payment_service.controller;
 
-import com.example.payment_service.model.EventAnalytics;
-import com.example.payment_service.service.EventAnalyticsService;
-import org.springframework.web.bind.annotation.*;
-
-
-
 import java.util.List;
 
-@CrossOrigin(originPatterns = "http://localhost:*")
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.payment_service.model.EventAnalytics;
+import com.example.payment_service.service.EventAnalyticsService;
+
+
 @RestController
 @RequestMapping("/analytics")
 public class EventAnalyticsController {
