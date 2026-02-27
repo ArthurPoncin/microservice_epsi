@@ -2,9 +2,6 @@ package com.example.payment_service.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import com.example.payment_service.model.Payment;
@@ -15,14 +12,18 @@ import com.example.payment_service.repository.PaymentRepository;
 public class PaymentService {
 
     private final PaymentRepository repository;
-    // Stripe ou Paypal
-    private final Map<String, PaymentProcessor> processors;
+    private final List<PaymentProcessor> processorList;
 
     public PaymentService(PaymentRepository repository, List<PaymentProcessor> processorList) {
         this.repository = repository;
+        this.processorList = processorList;
+    }
 
-        this.processors = processorList.stream()
-                .collect(Collectors.toMap(PaymentProcessor::getProviderName, Function.identity()));
+    private PaymentProcessor getProcessorByName(String name) {
+        return processorList.stream()
+                .filter(p -> name.equals(p.getProviderName()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Méthode de paiement inconnue : " + name));
     }
 
     public Payment createPayment(Payment payment) {
@@ -41,11 +42,7 @@ public class PaymentService {
 
         String method = payment.getPaymentMethod();
 
-        if (method == null || !processors.containsKey(method)) {
-            throw new RuntimeException("Méthode de paiement inconnue : " + method);
-        }
-
-        PaymentProcessor selectedProcessor = processors.get(method);
+        PaymentProcessor selectedProcessor = getProcessorByName(method);
 
         System.out.println(">>> Délégation du paiement au processeur : " + method);
         boolean success = selectedProcessor.process(payment.getMontant(), payment.getReference());
