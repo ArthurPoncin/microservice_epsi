@@ -43,6 +43,7 @@ jobs:
   dependency-audit-backend:
     name: Audit dépendances Maven (OWASP)
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     defaults:
       run:
         working-directory: payment-service
