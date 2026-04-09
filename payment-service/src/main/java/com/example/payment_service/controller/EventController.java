@@ -48,7 +48,7 @@ public class EventController {
     // inscription à un event
     @PostMapping("/{id}/register")
     public Registration registerUser(@PathVariable Long id, @RequestParam String email){
-        return service.registerUser(id,email);
+        return service.registerUser(id, email);
     }
     // récupérer les inscriptions d'un utilisateur
     @GetMapping("/my-registrations")

@@ -24,7 +24,7 @@ public class EventService {
 
 // Créer un nouvel event
 public Event createEvent(Event event){
-    if(event.getStatut() == null){
+    if (event.getStatut() == null) {
         event.setStatut(EventStatus.BROUILLON);
     }
     return eventRepository.save(event);
@@ -51,12 +51,12 @@ public Registration registerUser(Long eventId, String email){
     // Vérifier si l'event existe
     Event event = getEventById(eventId);
     // Vérifier le status de l'event
-    if(event.getStatut() != EventStatus.OUVERT){
+    if (event.getStatut() != EventStatus.OUVERT) {
         throw new RuntimeException("Inscriptions fermées pour cet événement");
     }
     // Vérifier la capacité 
     long currentRegistrations = registrationRepository.countByEventId(eventId);
-    if(currentRegistrations >= event.getCapaciteMax()){
+    if (currentRegistrations >= event.getCapaciteMax()) {
         event.setStatut(EventStatus.COMPLET);
         eventRepository.save(event);
         throw new RuntimeException("Event complet");

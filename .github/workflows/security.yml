@@ -1,0 +1,73 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Scan hebdomadaire chaque lundi à 6h00
+    - cron: "0 6 * * 1"
+
+jobs:
+  secrets-scan:
+    name: Scan de secrets (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependency-audit-frontend:
+    name: Audit dépendances NPM
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ClientMicroServiceJava
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: npm audit
+        run: npm audit --audit-level=high
+
+  dependency-audit-backend:
+    name: Audit dépendances Maven (OWASP)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: payment-service
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: temurin
+          cache: maven
+
+      - name: OWASP Dependency Check
+        run: |
+          ./mvnw org.owasp:dependency-check-maven:check \
+            -B --no-transfer-progress \
+            -DfailBuildOnCVSS=9 \
+            -DsuppressionFile="" \
+            -Dformats=HTML,JSON
+        continue-on-error: true
+
+      - name: Upload OWASP report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-report
+          path: payment-service/target/dependency-check-report.*

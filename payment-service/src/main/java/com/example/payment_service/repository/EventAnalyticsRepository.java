@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventAnalyticsRepository extends JpaRepository<EventAnalytics, Long> {
     
-    EventAnalytics findByEventId(Long EventId);
+    EventAnalytics findByEventId(Long eventId);
     
 } 
