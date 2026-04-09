@@ -1,6 +1,14 @@
-Groupe 3 Arthur Poncin, Théo Renard, Timeo Danois, Aurélien Marchand, Jordan Nkunga
+# Partie CI :
+Groupe : Arthur Poncin, Théo Renard, Timeo Danois, Jordan Nkunga
+
+
+---
+
+
 
 # Partie Client - Microservice Événements
+
+Groupe 3 Arthur Poncin, Théo Renard, Timeo Danois, Aurélien Marchand, Jordan Nkunga
 
 Ce projet est le Frontend (React) de l'application de gestion d'événements. Il permet aux utilisateurs de consulter les événements, de s'inscrire, de simuler un paiement et de gérer leurs réservations.
 
