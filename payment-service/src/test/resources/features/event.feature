@@ -1,4 +1,4 @@
-@event
+@event @e2e
 Feature: Gestion des Event et inscriptions
   @event-test
   Scenario: Création d'un event
