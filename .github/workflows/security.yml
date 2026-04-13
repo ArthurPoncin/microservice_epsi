@@ -5,9 +5,9 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
+  # schedule:
     # Scan hebdomadaire chaque lundi à 6h00
-    - cron: "0 6 * * 1"
+    # - cron: "0 6 * * 1"
 
 jobs:
   secrets-scan:
